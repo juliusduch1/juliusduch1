@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NOICE CLICKER</title>
+  <style>
+    /* CSS styles go here */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    h1 {
+      color: #FF0000;
+    }
+    #score {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    #timer {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+    #startBtn {
+      font-size: 18px;
+      margin-top: 20px;
+      padding: 10px 20px;
+    }
+    /* CSS styles go here */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: rgb(38, 166, 252); /* Set the background color to blue */
+}
+
+h1 {
+  color: #FF0000;
+}
+
+#score {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+#timer {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+#startBtn {
+  font-size: 18px;
+  margin-top: 20px;
+  padding: 10px 20px;
+}
+/* CSS styles go here */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: rgb(43, 159, 255);
+}
+
+h1 {
+  color: #FF0000;
+  text-shadow: 2px 2px 4px #000000;
+  transform: translateZ(0);
+}
+
+#score {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+  text-shadow: 1px 1px 2px #000000;
+  transform: translateZ(0);
+}
+
+#timer {
+  font-size: 18px;
+  margin-top: 10px;
+  text-shadow: 1px 1px 2px #000000;
+  transform: translateZ(0);
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+
+.container {
+  position: relative;
+  /* Rest of the game container styles */
+}
+
+#startBtn {
+  font-size: 18px;
+  margin-top: 20px;
+  padding: 10px 20px;
+  text-shadow: 1px 1px 2px #000000;
+  transform: translateZ(0);
+}
+
+.score {
+    margin-top: 20px;
+    font-size: 30px;
+}
+.cloud {
+  position: absolute;
+  background-image: url(cloud-png-icon-0.png); /* Replace with your cloud image */
+  background-repeat: no-repeat;
+  opacity: 0.1;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.upgrade-bar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 200px;
+  height: 100px;
+  background-color: #eaeaea;
+  border-radius: 15px;
+}
+
+.upgrade-progress {
+  width: 200px;
+  height: 100%;
+  background-color: #8bc34a;
+  transition: width 0.3s ease;
+}
+
+.upgrade-button {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 10px;
+  background-color: #4caf50;
+  cursor: pointer;
+}
+
+.upgrade-button button {
+  font-size: 40px;
+  font-weight: bold;
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.container {
+  position: relative;
+  /* Rest of the game container styles */
+}
+Save the updated CSS code in the styles.css file and make sure it's linked in the HTML file (index.html) by including the following line within the <head> section:
+
+html
+Copy code
+<link rel="stylesheet" href="styles.css">
+Now, when you open index.html in a web browser, you'll see the game interface with the text having a 3D effect, created by adding a subtle shadow using text-shadow and applying a translateZ(0) transform to activate hardware acceleration. This will give the text a slightly raised appearance, simulating a 3D effect.
+
+Feel free to adjust the text-shadow properties as per your preference to achieve the desired 3D effect.
+
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+    <h2 id="bestScore"></h2>
+  <div class="container">
+    <img src="mqdefault(1).png">
+  </div>
+
+  <div class="upgrade-bar">
+    <div class="upgrade-progress" id="upgradeProgress"></div>
+    <div class="upgrade-button">
+      <button onclick="snegl()">Upgrade</button>
+    </div>
+  </div>
+    
+  <h1>NOICE CLICKER</h1>
+  <div class="score">Points: <span id="scoreValue">0</span></div>
+  <p>Click the button as many times as you can within 10 seconds!</p>
+  <div id="cloudContainer"></div>
+  <button id="clickBtn" onclick="incrementScore(); playClickSound();">Click Me!</button>
+  <p id="score">Score: 0</p>
+  <p id="timer"></p>
+  <button id="startBtn" onclick="startGame()">Start Game</button>
+  <audio id="clickSound">
+    <source src="NoiceMichaelRosen.mp3" type="audio/mpeg"
+  </audio>
+
+</div>
+  <script>
+var score = 0;
+var bestScore = 0;
+var timer;
+var timeLeft = 30;
+var upgradeProgress = 0;
+var upgradePoint = 0;
+
+if (localStorage.getItem("bestScore")) {
+  bestScore = parseInt(localStorage.getItem("bestScore"));
+}
+
+function incrementScore() {
+  score++;
+  document.getElementById("score").textContent = "Score: " + score + upgradePoint;
+
+  if (score > bestScore) {
+    bestScore = score;
+    document.getElementById("bestScore").textContent = "Best Score: " + bestScore;
+
+    // Store the best score in localStorage
+    localStorage.setItem("bestScore", bestScore);
+  }
+}
+
+function startTimer() {
+  timer = setInterval(function() {
+    timeLeft--;
+    document.getElementById("timer").textContent = "Time Left: " + timeLeft + "s";
+
+    if (timeLeft === 0) {
+      clearInterval(timer);
+      document.getElementById("clickBtn").disabled = true;
+      document.getElementById("startBtn").disabled = false;
+    }
+  }, 1000);
+}
+
+function snegl() {
+  document.getElementById("scoreValue").textContent = score;
+  let newScore = 0;
+  if (score + newScore >= 10) {
+
+  upgradeProgress += 10;
+  newScore += 10;
+  upgradePoint +=2;
+  if (upgradeProgress > 100) {
+    upgradeProgress = 100;
+
+    }
+  }
+  document.getElementById("upgradeProgress").style.width = upgradeProgress + "%";
+}
+
+function startGame() {
+  score = 0;
+  timeLeft = 10;
+  document.getElementById("score").textContent = "Score: " + score;
+  document.getElementById("timer").textContent = "";
+  document.getElementById("clickBtn").disabled = false;
+  document.getElementById("startBtn").disabled = true;
+
+  startTimer();
+  function playClickSound() {
+  var clickSound = document.getElementById("clickSound");
+  clickSound.play();
+}
+
+function createCloud() {
+  var cloud = document.createElement("div");
+  cloud.className = "cloud";
+  cloud.style.left = Math.random() * 300 + "%";
+  cloud.style.top = Math.random() * 100 + "%";
+  cloud.style.width = Math.random() * (300 - 100) + 100 + "px";
+  cloud.style.height = Math.random() * (80 - 40) + 40 + "px";
+  cloud.style.backgroundSize = "contain";
+  document.getElementById("cloudContainer").appendChild(cloud);
+}
+
+
+
+
+for (var i = 0; i < 100; i++) {
+  createCloud();
+}
+document.getElementById("bestScore").textContent = "Best Score: " + bestScore;
+
+}
+  </script>
+</body>
+</html>
